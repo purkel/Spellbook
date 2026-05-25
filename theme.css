@@ -10,6 +10,8 @@ body {
 	--toggle-thumb-radius: 10px;
 	--slider-thumb-radius: 10px;
 
+	--glyph-diameter: 270px;
+
 	--folder-icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZvbGRlci1pY29uIGx1Y2lkZS1mb2xkZXIiPjxwYXRoIGQ9Ik0yMCAyMGEyIDIgMCAwIDAgMi0yVjhhMiAyIDAgMCAwLTItMmgtNy45YTIgMiAwIDAgMS0xLjY5LS45TDkuNiAzLjlBMiAyIDAgMCAwIDcuOTMgM0g0YTIgMiAwIDAgMC0yIDJ2MTNhMiAyIDAgMCAwIDIgMloiLz48L3N2Zz4=);
 	--folder-icon-open: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZvbGRlci1vcGVuLWljb24gbHVjaWRlLWZvbGRlci1vcGVuIj48cGF0aCBkPSJtNiAxNCAxLjUtMi45QTIgMiAwIDAgMSA5LjI0IDEwSDIwYTIgMiAwIDAgMSAxLjk0IDIuNWwtMS41NCA2YTIgMiAwIDAgMS0xLjk1IDEuNUg0YTIgMiAwIDAgMS0yLTJWNWEyIDIgMCAwIDEgMi0yaDMuOWEyIDIgMCAwIDEgMS42OS45bC44MSAxLjJhMiAyIDAgMCAwIDEuNjcuOUgxOGEyIDIgMCAwIDEgMiAydjIiLz48L3N2Zz4=);
 	--file-note-icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZpbGUtaWNvbiBsdWNpZGUtZmlsZSI+PHBhdGggZD0iTTYgMjJhMiAyIDAgMCAxLTItMlY0YTIgMiAwIDAgMSAyLTJoOGEyLjQgMi40IDAgMCAxIDEuNzA0LjcwNmwzLjU4OCAzLjU4OEEyLjQgMi40IDAgMCAxIDIwIDh2MTJhMiAyIDAgMCAxLTIgMnoiLz48cGF0aCBkPSJNMTQgMnY1YTEgMSAwIDAgMCAxIDFoNSIvPjwvc3ZnPg==);
@@ -51,13 +53,13 @@ button:active {
 .tree-item-self .tree-item-icon.collapse-icon:not(.is-collapsed) {
 	--folder-icon: var(--folder-icon-open)
 }
-.tree-item-self .tree-item-icon {
+.tree-item-self.nav-folder-title.is-clickable.mod-collapsible[data-path="Folder"] .tree-item-icon {
 	background-color: var(--icon-color);
 	opacity: var(--icon-opacity);
 	mask-image: var(--folder-icon);
 	mask-size: contain;
 }
-.collapse-icon svg.svg-icon {
+.tree-item-self.nav-folder-title.is-clickable.mod-collapsible[data-path="Folder"] .collapse-icon svg.svg-icon {
 	color: transparent;
 }
 
@@ -96,14 +98,78 @@ button:active {
 }
 
 /* editor */
+@property --border-end {
+	syntax: "<percentage>";
+	inherits: false;
+	initial-value: 100%;
+}
+@keyframes underlineCreate {
+	0% {--border-end: -10%}
+	50% {--border-end: 50%}
+	100% {--border-end: 100%}
+}
 .inline-title {
-	border-bottom: 2px solid var(--hr-color);
+	--border-end: 100%;
+	border-image-slice: 1;
+	border-image-source: linear-gradient(
+		to right,
+		var(--hr-color), 
+		var(--hr-color) var(--border-end), 
+		var(--color-accent-2) calc(var(--border-end) + 10%),
+		transparent calc(var(--border-end) + 15%)
+	);
+	border-bottom: 2px solid;
+	animation-name: underlineCreate;
+	animation-duration: 0.7s;
+	animation-timing-function: linear;
 }
 
 .cm-header, :root h1, :root h2, :root h3, :root h4, :root h5, :root h6 {
 	color: var(--header-color)
 }
 
+/* new tab */
+@keyframes glyphSpin {
+	0% {
+		transform: rotate(-135deg);
+	}
+	100% {
+		transform: rotate(45deg);
+	}
+}
+.empty-state::before {
+	pointer-events: none;
+	content: "";
+	padding: 10px;
+	position: absolute;
+	width: var(--glyph-diameter);
+	height: var(--glyph-diameter);
+	border-radius: 100%;
+	border: 2px solid var(--color-accent-2);
+	opacity: 0.5;
+	z-index: +1;
+	outline: 2px dotted var(--color-accent-2);
+	outline-offset: 8px;
+}
+.empty-state-action.tappable.mod-close::before {
+	--length: calc((var(--glyph-diameter) + 10px) * sqrt(0.5));
+	pointer-events: none;
+	content: "";
+	padding: 10px;
+	position: absolute;
+	position-area: center;
+	width: var(--length);
+	height: var(--length);
+	border: 2px solid var(--color-accent-2);
+	transform: rotate(45deg);
+	z-index: +1;
+	opacity: 0.5;
+	animation-name: glyphSpin;
+	animation-timing-function: linear;
+	animation-duration: 30s;
+	animation-iteration-count: infinite;
+
+}
 svg * {
 	stroke-linecap: square;
 	stroke-linejoin: miter;
@@ -111,8 +177,17 @@ svg * {
 	ry: 3;
 }
 
+/* menu */
+@keyframes menuOpen {
+	0% {transform: scaleX(0%);}
+	100% {transform: scaleX(100%);}
+}
 .menu {
+	transform-origin: left;
 	padding: var(--size-2-1);
+	animation-name: menuOpen;
+	animation-duration: 0.08s;
+	animation-timing-function: ease-out;
 }
 
 .menu-item {
