@@ -11,6 +11,7 @@ body {
 	--slider-thumb-radius: 10px;
 
 	--glyph-diameter: 270px;
+	--glyph-spin-time: 30s;
 
 	--folder-icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZvbGRlci1pY29uIGx1Y2lkZS1mb2xkZXIiPjxwYXRoIGQ9Ik0yMCAyMGEyIDIgMCAwIDAgMi0yVjhhMiAyIDAgMCAwLTItMmgtNy45YTIgMiAwIDAgMS0xLjY5LS45TDkuNiAzLjlBMiAyIDAgMCAwIDcuOTMgM0g0YTIgMiAwIDAgMC0yIDJ2MTNhMiAyIDAgMCAwIDIgMloiLz48L3N2Zz4=);
 	--folder-icon-open: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZvbGRlci1vcGVuLWljb24gbHVjaWRlLWZvbGRlci1vcGVuIj48cGF0aCBkPSJtNiAxNCAxLjUtMi45QTIgMiAwIDAgMSA5LjI0IDEwSDIwYTIgMiAwIDAgMSAxLjk0IDIuNWwtMS41NCA2YTIgMiAwIDAgMS0xLjk1IDEuNUg0YTIgMiAwIDAgMS0yLTJWNWEyIDIgMCAwIDEgMi0yaDMuOWEyIDIgMCAwIDEgMS42OS45bC44MSAxLjJhMiAyIDAgMCAwIDEuNjcuOUgxOGEyIDIgMCAwIDEgMiAydjIiLz48L3N2Zz4=);
@@ -19,6 +20,12 @@ body {
 	--file-other-icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXNjYW4taWNvbiBsdWNpZGUtc2NhbiI+PHBhdGggZD0iTTMgN1Y1YTIgMiAwIDAgMSAyLTJoMiIvPjxwYXRoIGQ9Ik0xNyAzaDJhMiAyIDAgMCAxIDIgMnYyIi8+PHBhdGggZD0iTTIxIDE3djJhMiAyIDAgMCAxLTIgMmgtMiIvPjxwYXRoIGQ9Ik03IDIxSDVhMiAyIDAgMCAxLTItMnYtMiIvPjwvc3ZnPg==);
 
 	--file-icon-opacity: calc(var(--icon-opacity) / 2);
+
+	--divider-color: var(--background-secondary-alt);
+
+	--view-wipe-time: 0.25s;
+	--underline-create-time: 0.454s;
+	--menu-open-time: 0.21s;
 }
 .theme-dark {
 	--background-primary: #111;
@@ -31,6 +38,11 @@ body {
 	--text-highlight-bg: hsla(var(--accent-h), var(--accent-s), calc(var(--accent-l) * 1.10), 0.4);
 }
 .theme-light {
+	--background-primary: #fff;
+	--background-primary-alt: #f5f5f5;
+	--background-secondary: #e5e5e5;
+	--background-secondary-alt: #cecece;
+
 	--color-accent-3: hsl(calc(var(--accent-h) - 3), calc(var(--accent-s) * 0.6), calc(var(--accent-l) * 0.87));
 	--header-color: var(--color-accent-3)
 }
@@ -118,7 +130,7 @@ button:active {
 	);
 	border-bottom: 2px solid;
 	animation-name: underlineCreate;
-	animation-duration: 0.7s;
+	animation-duration: var(--underline-create-time);
 	animation-timing-function: linear;
 }
 
@@ -164,10 +176,31 @@ button:active {
 	opacity: 0.5;
 	animation-name: glyphSpin;
 	animation-timing-function: linear;
-	animation-duration: 30s;
+	animation-duration: var(--glyph-spin-time);
 	animation-iteration-count: infinite;
 
 }
+@property --view-edge {
+	syntax: "<percentage>";
+	inherits: false;
+	initial-value: 100%;
+}
+@keyframes viewWipe{
+	0% {--view-edge: 0%}
+	100% {--view-edge: 100%}
+}
+.view-content {
+	--view-edge: 100%;
+	mask-image: linear-gradient(
+		to bottom,
+		black var(--view-edge),
+		transparent calc(var(--view-edge) + 20%)
+	);
+	animation-name: viewWipe;
+	animation-duration: var(--view-wipe-time);
+	animation-timing-function: linear;
+}
+
 svg * {
 	stroke-linecap: square;
 	stroke-linejoin: miter;
@@ -190,7 +223,7 @@ svg * {
 	transform-origin: left;
 	padding: var(--size-2-1);
 	animation-name: menuOpen;
-	animation-duration: 0.21s;
+	animation-duration: var(--menu-open-time);
 	animation-timing-function: linear;
 	background-image: linear-gradient(
 		to right,
@@ -211,4 +244,15 @@ svg * {
 
 .menu-separator {
 	margin: var(--size-2-1) calc(var(--size-2-1) * -1);
+}
+
+/* settings */
+.modal {
+	mask-image: linear-gradient(
+		to top,
+		black var(--view-edge),
+		transparent calc(var(--view-edge) + 20%)
+	);
+	animation-name: viewWipe;
+	animation-duration: var(--view-wipe-time);
 }
