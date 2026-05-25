@@ -98,25 +98,23 @@ button:active {
 }
 
 /* editor */
-@property --border-end {
+@property --title-underline-end {
 	syntax: "<percentage>";
 	inherits: false;
 	initial-value: 100%;
 }
 @keyframes underlineCreate {
-	0% {--border-end: -10%}
-	50% {--border-end: 50%}
-	100% {--border-end: 100%}
+	0% {--title-underline-end: -10%}
+	100% {--title-underline-end: 100%}
 }
 .inline-title {
-	--border-end: 100%;
+	--title-underline-end: 100%;
 	border-image-slice: 1;
 	border-image-source: linear-gradient(
 		to right,
-		var(--hr-color), 
-		var(--hr-color) var(--border-end), 
-		var(--color-accent-2) calc(var(--border-end) + 10%),
-		transparent calc(var(--border-end) + 15%)
+		var(--hr-color) var(--title-underline-end), 
+		var(--color-accent-2) calc(var(--title-underline-end) + 10%),
+		transparent calc(var(--title-underline-end) + 15%)
 	);
 	border-bottom: 2px solid;
 	animation-name: underlineCreate;
@@ -178,16 +176,33 @@ svg * {
 }
 
 /* menu */
+@property --menu-anim-edge {
+	syntax: "<percentage>";
+	inherits: false;
+	initial-value: 100%;
+}
 @keyframes menuOpen {
-	0% {transform: scaleX(0%);}
-	100% {transform: scaleX(100%);}
+	0% {--menu-anim-edge: -10%}
+	100% {--menu-anim-edge: 100%}
 }
 .menu {
+	--menu-anim-edge: 100%;
 	transform-origin: left;
 	padding: var(--size-2-1);
 	animation-name: menuOpen;
-	animation-duration: 0.08s;
-	animation-timing-function: ease-out;
+	animation-duration: 0.21s;
+	animation-timing-function: linear;
+	background-image: linear-gradient(
+		to right,
+		var(--background-secondary) var(--menu-anim-edge), 
+		var(--color-accent-2) calc(var(--menu-anim-edge) + 10%),
+		transparent calc(var(--menu-anim-edge) + 15%)
+	);
+	mask-image: linear-gradient(
+		to right, 
+		white calc(var(--menu-anim-edge) + 10%),
+		transparent calc(var(--menu-anim-edge) + 15%)
+	);
 }
 
 .menu-item {
