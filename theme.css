@@ -5,6 +5,7 @@ body {
 	--input-radius: var(--radius-l);
 	--tab-radius-active: var(--radius-m);
 	--tab-curve: 12px;
+	--tab-radius: 10px;
 	--checkbox-radius: 10px;
 	--toggle-radius: 10px;
 	--toggle-thumb-radius: 10px;
@@ -25,7 +26,7 @@ body {
 
 	--view-wipe-time: 0.25s;
 	--underline-create-time: 0.454s;
-	--menu-open-time: 0.21s;
+	--menu-open-time: 0.16s;
 }
 .theme-dark {
 	--background-primary: #111;
@@ -133,9 +134,16 @@ button:active {
 	animation-duration: var(--underline-create-time);
 	animation-timing-function: linear;
 }
-
+/*> headers */
 .cm-header, :root h1, :root h2, :root h3, :root h4, :root h5, :root h6 {
 	color: var(--header-color)
+}
+/*> equations */
+mjx-mtext, mjx-mi {
+	color: var(--header-color);
+}
+.MJX-TEX {
+	font-size: large;
 }
 
 /* new tab */
@@ -228,11 +236,22 @@ svg * {
 	background-image: linear-gradient(
 		to right,
 		var(--background-secondary) var(--menu-anim-edge), 
-		var(--color-accent-2) calc(var(--menu-anim-edge) + 10%),
-		transparent calc(var(--menu-anim-edge) + 15%)
+		var(--color-accent-2) calc(var(--menu-anim-edge) + 10%)
 	);
 	mask-image: linear-gradient(
 		to right, 
+		white calc(var(--menu-anim-edge) + 10%),
+		transparent calc(var(--menu-anim-edge) + 15%)
+	);
+}
+.menu[style*="72.6375px"] {
+	background-image: linear-gradient(
+		to left,
+		var(--background-secondary) var(--menu-anim-edge), 
+		var(--color-accent-2) calc(var(--menu-anim-edge) + 10%)
+	);
+	mask-image: linear-gradient(
+		to left, 
 		white calc(var(--menu-anim-edge) + 10%),
 		transparent calc(var(--menu-anim-edge) + 15%)
 	);
