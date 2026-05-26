@@ -183,7 +183,7 @@ mjx-mtext, mjx-mi {
 }
 .view-content hr::after {
 	content: "";
-	position: relative;
+	position: absolute;
 	top: 0px;
 	left: calc(50% - var(--hr-icon-radius));
 	right: calc(50% - var(--hr-icon-radius));
