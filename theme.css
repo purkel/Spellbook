@@ -16,6 +16,7 @@ body {
 	--list-bullet-transform: scale(1.3) translate(0px,1.1px);
 	--hr-gradient-width: 20%;
 	--hr-icon-radius: 8px;
+	--hr-icon-color: var(--color-accent-2);
 	--hr-gap-radius: calc(var(--hr-icon-radius) + 4px);
 	--hr-gradient: linear-gradient(
 		to right,
@@ -44,7 +45,7 @@ body {
 
 	--view-wipe-time: 0.25s;
 	--underline-create-time: 0.454s;
-	--menu-open-time: 0.16s;
+	--menu-open-time: 0.3s;
 
 	--image-spacing: 8px;
 }
@@ -182,12 +183,12 @@ mjx-mtext, mjx-mi {
 }
 .view-content hr::after {
 	content: "";
-	position: absolute;
+	position: relative;
 	top: 0px;
 	left: calc(50% - var(--hr-icon-radius));
 	right: calc(50% - var(--hr-icon-radius));
 	bottom:0px;
-	background-color: var(--hr-color);
+	background-color: var(--hr-icon-color);
 	mask-image: var(--bullet-icon);
 	mask-repeat: no-repeat;
 	mask-position: center;
@@ -281,24 +282,12 @@ svg * {
 	animation-duration: var(--menu-open-time);
 	animation-timing-function: linear;
 	background-image: linear-gradient(
-		to right,
+		to bottom,
 		var(--background-secondary) var(--menu-anim-edge), 
 		var(--color-accent-2) calc(var(--menu-anim-edge) + 10%)
 	);
 	mask-image: linear-gradient(
-		to right, 
-		white calc(var(--menu-anim-edge) + 10%),
-		transparent calc(var(--menu-anim-edge) + 15%)
-	);
-}
-.menu[style*="72.6375px"] {
-	background-image: linear-gradient(
-		to left,
-		var(--background-secondary) var(--menu-anim-edge), 
-		var(--color-accent-2) calc(var(--menu-anim-edge) + 10%)
-	);
-	mask-image: linear-gradient(
-		to left, 
+		to bottom, 
 		white calc(var(--menu-anim-edge) + 10%),
 		transparent calc(var(--menu-anim-edge) + 15%)
 	);
