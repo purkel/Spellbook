@@ -27,6 +27,8 @@ body {
 	--view-wipe-time: 0.25s;
 	--underline-create-time: 0.454s;
 	--menu-open-time: 0.16s;
+
+	--image-spacing: 8px;
 }
 .theme-dark {
 	--background-primary: #111;
@@ -144,6 +146,10 @@ mjx-mtext, mjx-mi {
 }
 .MJX-TEX {
 	font-size: large;
+}
+/*> images */
+.internal-embed.is-loaded.media-embed.image-embed {
+	padding: var(--image-spacing);
 }
 
 /* new tab */
