@@ -31,7 +31,6 @@ body {
 	);
 
 	--glyph-diameter: 270px;
-	--glyph-spin-time: 30s;
 
 	--folder-icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZvbGRlci1pY29uIGx1Y2lkZS1mb2xkZXIiPjxwYXRoIGQ9Ik0yMCAyMGEyIDIgMCAwIDAgMi0yVjhhMiAyIDAgMCAwLTItMmgtNy45YTIgMiAwIDAgMS0xLjY5LS45TDkuNiAzLjlBMiAyIDAgMCAwIDcuOTMgM0g0YTIgMiAwIDAgMC0yIDJ2MTNhMiAyIDAgMCAwIDIgMloiLz48L3N2Zz4=);
 	--folder-icon-open: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZvbGRlci1vcGVuLWljb24gbHVjaWRlLWZvbGRlci1vcGVuIj48cGF0aCBkPSJtNiAxNCAxLjUtMi45QTIgMiAwIDAgMSA5LjI0IDEwSDIwYTIgMiAwIDAgMSAxLjk0IDIuNWwtMS41NCA2YTIgMiAwIDAgMS0xLjk1IDEuNUg0YTIgMiAwIDAgMS0yLTJWNWEyIDIgMCAwIDEgMi0yaDMuOWEyIDIgMCAwIDEgMS42OS45bC44MSAxLjJhMiAyIDAgMCAwIDEuNjcuOUgxOGEyIDIgMCAwIDEgMiAydjIiLz48L3N2Zz4=);
@@ -155,9 +154,18 @@ button:active {
 	animation-duration: var(--underline-create-time);
 	animation-timing-function: linear;
 }
-/*> headers */
-.cm-header, :root h1, :root h2, :root h3, :root h4, :root h5, :root h6 {
-	color: var(--header-color)
+/*> text */
+.text-cursive .view-content {
+	font-family: var(--fancy-font);
+	font-style: italic;
+}
+/*>> headings */
+:is(.cm-header, :root h1, :root h2, :root h3, :root h4, :root h5, :root h6) {
+	color: var(--header-color);
+}
+.heading-cursive :is(.cm-header, :root h1, :root h2, :root h3, :root h4, :root h5, :root h6) {
+	font-family: var(--fancy-font);
+	font-style: italic;
 }
 /*> equations */
 mjx-mtext, mjx-mi {
@@ -176,22 +184,47 @@ mjx-mtext, mjx-mi {
 	mask-size: contain;
 	mask-repeat: no-repeat;
 }
-/* horizontal rules */
+
+.list-cursive li::marker {
+	font-size: larger;
+	font-family: var(--fancy-font);
+	font-style: italic;
+}
+.markdown-rendered ol > li {
+    margin-inline-start: 2ch;
+}
+
+/*> horizontal rules */
 .view-content hr {
 	border-image-slice: 1;
 	border-image-source: var(--hr-gradient);
+	overflow: visible;
 }
-.view-content hr::after {
+.markdown-source-view hr::after {
+	pointer-events: none;
 	content: "";
 	position: absolute;
 	top: 0px;
-	left: calc(50% - var(--hr-icon-radius));
-	right: calc(50% - var(--hr-icon-radius));
-	bottom:0px;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
 	background-color: var(--hr-icon-color);
 	mask-image: var(--bullet-icon);
 	mask-repeat: no-repeat;
 	mask-position: center;
+}
+.markdown-rendered hr::after {
+	display: block;
+	pointer-events: none;
+	content: "";
+	height: calc(2 * var(--hr-icon-radius));
+	width: calc(2 * var(--hr-icon-radius));
+	background-color: var(--hr-icon-color);
+	mask-image: var(--bullet-icon);
+	mask-repeat: no-repeat;
+	mask-position: center;
+	margin-left: calc(50% - var(--hr-icon-radius));
+	transform: translate(0px, -9px);
 }
 
 /* new tab */
@@ -202,6 +235,10 @@ mjx-mtext, mjx-mi {
 	100% {
 		transform: rotate(45deg);
 	}
+}
+.interface-cursive .empty-state {
+	font-family: var(--fancy-font);
+	font-style: italic;
 }
 .empty-state::before {
 	pointer-events: none;
@@ -236,6 +273,7 @@ mjx-mtext, mjx-mi {
 	animation-iteration-count: infinite;
 
 }
+
 @property --view-edge {
 	syntax: "<percentage>";
 	inherits: false;
@@ -311,3 +349,54 @@ svg * {
 	animation-name: viewWipe;
 	animation-duration: var(--view-wipe-time);
 }
+
+/* style settings */
+/* @settings
+
+name: Spellbook
+id: spellbook-theme-settings
+settings:
+    - 
+        id: heading-cursive
+        title: Handwritten Font
+        type: heading
+        level: 3
+	-
+		id: fancy-font
+		title: Font used
+		type: variable-text
+		default: "Didot, serif"
+    - 
+		id: text-cursive
+		title: For all text in editor
+		type: class-toggle
+		default: false
+	-
+        id: heading-cursive
+        title: For headings
+        type: class-toggle
+		default: true
+    - 
+        id: list-cursive
+        title: For lists
+        type: class-toggle
+		default: true
+	- 
+        id: interface-cursive
+        title: For interface
+        type: class-toggle
+		default: true
+	-
+		id: animations
+		title: Animations
+		type: heading
+		level: 3
+	-
+		id: glyph-spin-time
+		title: Time for glyph to spin
+		description: The ammount of time it takes for the glyph on the new tab page to complete half a spin in seconds
+		type: variable-number
+		default: 30
+		format: s
+
+*/
