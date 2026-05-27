@@ -59,9 +59,9 @@ body {
 	--file-icon-opacity: calc(var(--icon-opacity) / 2);
 
 	--divider-color: var(--background-secondary-alt);
-	--tab-divider-color: hsla(var(--accent-h), var(--accent-s), calc(var(--accent-l)), 0.6);
-	--graph-line:
-	
+	--tab-divider-color: var(--color-accent-faint);
+	--graph-line: var(--color-accent-2-faint);
+
 	--view-wipe-time: 0.25s;
 	--underline-create-time: 0.454s;
 	--menu-open-time: 0.3s;
@@ -77,6 +77,8 @@ body {
 	
 	--header-color: var(--color-accent-2);
 	--text-highlight-bg: hsla(var(--accent-h), var(--accent-s), calc(var(--accent-l) * 1.10), 0.4);
+	--color-accent-faint: hsla(var(--accent-h), var(--accent-s), calc(var(--accent-l)), 0.5);
+	--color-accent-2-faint: hsla(calc(var(--accent-h) - 5), calc(var(--accent-s) * 0.9), calc(var(--accent-l) * 1.29), 0.4);
 }
 .theme-light {
 	--background-primary: #fff;
@@ -85,7 +87,9 @@ body {
 	--background-secondary-alt: #cecece;
 
 	--color-accent-3: hsl(calc(var(--accent-h) - 3), calc(var(--accent-s) * 0.6), calc(var(--accent-l) * 0.87));
-	--header-color: var(--color-accent-3)
+	--header-color: var(--color-accent-3);
+	--color-accent-faint: hsla(var(--accent-h), var(--accent-s), calc(var(--accent-l)), 0.5);
+	--color-accent-2-faint: hsla(calc(var(--accent-h) - 3), calc(var(--accent-s) * 0.85), calc(var(--accent-l) * 0.99), 0.4);
 }
 /* icon with accent color on click */
 .clickable-icon:active, 
@@ -221,7 +225,7 @@ mjx-mtext, mjx-mi {
 	--list-bullet-size: 0.3em;
 }
 
-:root:not(:has(.list-cursive)) li::marker {
+:root:not(:has(.list-cursive)) li::marker, :root:not(:has(.list-cursive)) .list-number {
 	font-size: larger;
 	font-family: var(--fancy-font);
 	font-style: italic;
@@ -304,10 +308,9 @@ mjx-mtext, mjx-mi {
 	width: var(--glyph-diameter);
 	height: var(--glyph-diameter);
 	border-radius: 50%;
-	border: 2px solid var(--color-accent-2);
-	opacity: 0.5;
+	border: 2px solid var(--color-accent-faint);
 	z-index: +1;
-	outline: 2px dotted var(--color-accent-2);
+	outline: 2px dotted var(--color-accent-faint);
 	outline-offset: 8px;
 }
 :root:not(:has(.glyph-hide)) .empty-state-action.tappable.mod-close::before {
@@ -319,10 +322,9 @@ mjx-mtext, mjx-mi {
 	position-area: center;
 	width: var(--length);
 	height: var(--length);
-	border: 2px solid var(--color-accent-2);
+	border: 2px solid var(--color-accent-faint);
 	transform: rotate(45deg);
 	z-index: +1;
-	opacity: 0.5;
 	animation-name: glyphSpin;
 	animation-timing-function: linear;
 	animation-duration: var(--glyph-spin-time);
