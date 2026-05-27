@@ -31,6 +31,21 @@ body {
 		var(--hr-color) calc(100% - var(--hr-gradient-width)),
 		transparent
 	);
+	--menu-hr-gradient: linear-gradient(
+		to right,
+		transparent,
+		var(--hr-color) var(--hr-gradient-width),
+		var(--hr-color) calc(100% - var(--hr-gradient-width)),
+		transparent
+	);
+	--bq-gradient-width: 5%;
+	--bq-gradient: linear-gradient(
+		to bottom,
+		transparent,
+		var(--color-accent) var(--bq-gradient-width),
+		var(--color-accent) calc(100% - var(--bq-gradient-width)),
+		transparent
+	);
 
 	--glyph-diameter: 270px;
 	--glyph-spin-time: 30s;
@@ -44,7 +59,9 @@ body {
 	--file-icon-opacity: calc(var(--icon-opacity) / 2);
 
 	--divider-color: var(--background-secondary-alt);
-
+	--tab-divider-color: hsla(var(--accent-h), var(--accent-s), calc(var(--accent-l)), 0.6);
+	--graph-line:
+	
 	--view-wipe-time: 0.25s;
 	--underline-create-time: 0.454s;
 	--menu-open-time: 0.3s;
@@ -191,10 +208,17 @@ mjx-mtext, mjx-mi {
 	padding: var(--image-spacing);
 }
 /*> lists */
-.list-bullet:after {
+.list-bullet {
+	margin-right: 4px
+}
+:root:not(:has(.bullet-default)) .list-bullet:after {
 	mask-image: var(--bullet-icon);
 	mask-size: contain;
 	mask-repeat: no-repeat;
+}
+.bullet-default {
+	--list-bullet-radius: 50%;
+	--list-bullet-size: 0.3em;
 }
 
 :root:not(:has(.list-cursive)) li::marker {
@@ -212,6 +236,9 @@ mjx-mtext, mjx-mi {
 	border-image-slice: 1;
 	border-image-source: var(--hr-gradient);
 	overflow: visible;
+}
+.hr-gap-hide {
+	--hr-gap-radius: 0px;
 }
 .markdown-source-view hr::after {
 	pointer-events: none;
@@ -238,6 +265,11 @@ mjx-mtext, mjx-mi {
 	mask-position: center;
 	margin-left: calc(50% - var(--hr-icon-radius));
 	transform: translate(0px, -9px);
+}
+/*> quotes */
+:root blockquote, .HyperMD-quote:before {
+	border-image-slice: 1;
+	border-image-source: var(--bq-gradient);
 }
 /*> view-content headers */
 :root:has(.view-header-cursive) .view-header-title-container {
@@ -271,7 +303,7 @@ mjx-mtext, mjx-mi {
 	position: absolute;
 	width: var(--glyph-diameter);
 	height: var(--glyph-diameter);
-	border-radius: 100%;
+	border-radius: 50%;
 	border: 2px solid var(--color-accent-2);
 	opacity: 0.5;
 	z-index: +1;
@@ -361,6 +393,8 @@ svg * {
 
 .menu-separator {
 	margin: var(--size-2-1) calc(var(--size-2-1) * -1);
+	border-image-slice: 1;
+	border-image-source: var(--menu-hr-gradient);
 }
 
 /* obsidian settings */
@@ -523,12 +557,47 @@ settings:
 				label: Eye
 				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWV5ZS1pY29uIGx1Y2lkZS1leWUiPjxwYXRoIGQ9Ik0yLjA2MiAxMi4zNDhhMSAxIDAgMCAxIDAtLjY5NiAxMC43NSAxMC43NSAwIDAgMSAxOS44NzYgMCAxIDEgMCAwIDEgMCAuNjk2IDEwLjc1IDEwLjc1IDAgMCAxLTE5Ljg3NiAwIi8+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMyIvPjwvc3ZnPg==)
 			-
-				lable: Radar
-				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXJhZGFyLWljb24gbHVjaWRlLXJhZGFyIj48cGF0aCBkPSJNMTkuMDcgNC45M0ExMCAxMCAwIDAgMCA2Ljk5IDMuMzQiLz48cGF0aCBkPSJNNCA2aC4wMSIvPjxwYXRoIGQ9Ik0yLjI5IDkuNjJBMTAgMTAgMCAxIDAgMjEuMzEgOC4zNSIvPjxwYXRoIGQ9Ik0xNi4yNCA3Ljc2QTYgNiAwIDEgMCA4LjIzIDE2LjY3Ii8+PHBhdGggZD0iTTEyIDE4aC4wMSIvPjxwYXRoIGQ9Ik0xNy45OSAxMS42NkE2IDYgMCAwIDEgMTUuNzcgMTYuNjciLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIyIi8+PHBhdGggZD0ibTEzLjQxIDEwLjU5IDUuNjYtNS42NiIvPjwvc3ZnPg==)
-			-
 				label: Blocks
 				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNvbXBvbmVudC1pY29uIGx1Y2lkZS1jb21wb25lbnQiPjxwYXRoIGQ9Ik0xNS41MzYgMTEuMjkzYTEgMSAwIDAgMCAwIDEuNDE0bDIuMzc2IDIuMzc3YTEgMSAwIDAgMCAxLjQxNCAwbDIuMzc3LTIuMzc3YTEgMSAwIDAgMCAwLTEuNDE0bC0yLjM3Ny0yLjM3N2ExIDEgMCAwIDAtMS40MTQgMHoiLz48cGF0aCBkPSJNMi4yOTcgMTEuMjkzYTEgMSAwIDAgMCAwIDEuNDE0bDIuMzc3IDIuMzc3YTEgMSAwIDAgMCAxLjQxNCAwbDIuMzc3LTIuMzc3YTEgMSAwIDAgMCAwLTEuNDE0TDYuMDg4IDguOTE2YTEgMSAwIDAgMC0xLjQxNCAweiIvPjxwYXRoIGQ9Ik04LjkxNiAxNy45MTJhMSAxIDAgMCAwIDAgMS40MTVsMi4zNzcgMi4zNzZhMSAxIDAgMCAwIDEuNDE0IDBsMi4zNzctMi4zNzZhMSAxIDAgMCAwIDAtMS40MTVsLTIuMzc3LTIuMzc2YTEgMSAwIDAgMC0xLjQxNCAweiIvPjxwYXRoIGQ9Ik04LjkxNiA0LjY3NGExIDEgMCAwIDAgMCAxLjQxNGwyLjM3NyAyLjM3NmExIDEgMCAwIDAgMS40MTQgMGwyLjM3Ny0yLjM3NmExIDEgMCAwIDAgMC0xLjQxNGwtMi4zNzctMi4zNzdhMSAxIDAgMCAwLTEuNDE0IDB6Ii8+PC9zdmc+)
 			-
 				label: Badge
 				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWJhZGdlLWljb24gbHVjaWRlLWJhZGdlIj48cGF0aCBkPSJNMy44NSA4LjYyYTQgNCAwIDAgMSA0Ljc4LTQuNzcgNCA0IDAgMCAxIDYuNzQgMCA0IDQgMCAwIDEgNC43OCA0Ljc4IDQgNCAwIDAgMSAwIDYuNzQgNCA0IDAgMCAxLTQuNzcgNC43OCA0IDQgMCAwIDEtNi43NSAwIDQgNCAwIDAgMS00Ljc4LTQuNzcgNCA0IDAgMCAxIDAtNi43NloiLz48L3N2Zz4=)
+			-
+				label: Circle
+				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNpcmNsZS1pY29uIGx1Y2lkZS1jaXJjbGUiPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjEwIi8+PC9zdmc+)
+			-
+				label: Target
+				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWNpcmNsZS1kb3QtaWNvbiBsdWNpZGUtY2lyY2xlLWRvdCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxIi8+PC9zdmc+) 
+			-
+				label: Circle diamter
+				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWRpYW1ldGVyLWljb24gbHVjaWRlLWRpYW1ldGVyIj48Y2lyY2xlIGN4PSIxOSIgY3k9IjE5IiByPSIyIi8+PGNpcmNsZSBjeD0iNSIgY3k9IjUiIHI9IjIiLz48cGF0aCBkPSJNNi40OCAzLjY2YTEwIDEwIDAgMCAxIDEzLjg2IDEzLjg2Ii8+PHBhdGggZD0ibTYuNDEgNi40MSAxMS4xOCAxMS4xOCIvPjxwYXRoIGQ9Ik0zLjY2IDYuNDhhMTAgMTAgMCAwIDAgMTMuODYgMTMuODYiLz48L3N2Zz4=)
+			-
+				label: Circle radius
+				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXJhZGl1cy1pY29uIGx1Y2lkZS1yYWRpdXMiPjxwYXRoIGQ9Ik0yMC4zNCAxNy41MmExMCAxMCAwIDEgMC0yLjgyIDIuODIiLz48Y2lyY2xlIGN4PSIxOSIgY3k9IjE5IiByPSIyIi8+PHBhdGggZD0ibTEzLjQxIDEzLjQxIDQuMTggNC4xOCIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjIiLz48L3N2Zz4=)
+			-
+				label: Solar-System
+				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLW9yYml0LWljb24gbHVjaWRlLW9yYml0Ij48cGF0aCBkPSJNMjAuMzQxIDYuNDg0QTEwIDEwIDAgMCAxIDEwLjI2NiAyMS44NSIvPjxwYXRoIGQ9Ik0zLjY1OSAxNy41MTZBMTAgMTAgMCAwIDEgMTMuNzQgMi4xNTIiLz48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIzIi8+PGNpcmNsZSBjeD0iMTkiIGN5PSI1IiByPSIyIi8+PGNpcmNsZSBjeD0iNSIgY3k9IjE5IiByPSIyIi8+PC9zdmc+)
+			-
+				label: Atom
+				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWF0b20taWNvbiBsdWNpZGUtYXRvbSI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMSIvPjxwYXRoIGQ9Ik0yMC4yIDIwLjJjMi4wNC0yLjAzLjAyLTcuMzYtNC41LTExLjktNC41NC00LjUyLTkuODctNi41NC0xMS45LTQuNS0yLjA0IDIuMDMtLjAyIDcuMzYgNC41IDExLjkgNC41NCA0LjUyIDkuODcgNi41NCAxMS45IDQuNVoiLz48cGF0aCBkPSJNMTUuNyAxNS43YzQuNTItNC41NCA2LjU0LTkuODcgNC41LTExLjktMi4wMy0yLjA0LTcuMzYtLjAyLTExLjkgNC41LTQuNTIgNC41NC02LjU0IDkuODctNC41IDExLjkgMi4wMyAyLjA0IDcuMzYuMDIgMTEuOS00LjVaIi8+PC9zdmc+)
+			- 
+				label: Snowflake
+				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXNub3dmbGFrZS1pY29uIGx1Y2lkZS1zbm93Zmxha2UiPjxwYXRoIGQ9Im0xMCAyMC0xLjI1LTIuNUw2IDE4Ii8+PHBhdGggZD0iTTEwIDQgOC43NSA2LjUgNiA2Ii8+PHBhdGggZD0ibTE0IDIwIDEuMjUtMi41TDE4IDE4Ii8+PHBhdGggZD0ibTE0IDQgMS4yNSAyLjVMMTggNiIvPjxwYXRoIGQ9Im0xNyAyMS0zLTZoLTQiLz48cGF0aCBkPSJtMTcgMy0zIDYgMS41IDMiLz48cGF0aCBkPSJNMiAxMmg2LjVMMTAgOSIvPjxwYXRoIGQ9Im0yMCAxMC0xLjUgMiAxLjUgMiIvPjxwYXRoIGQ9Ik0yMiAxMmgtNi41TDE0IDE1Ii8+PHBhdGggZD0ibTQgMTAgMS41IDJMNCAxNCIvPjxwYXRoIGQ9Im03IDIxIDMtNi0xLjUtMyIvPjxwYXRoIGQ9Im03IDMgMyA2aDQiLz48L3N2Zz4=)
+			- 
+				label: Dash
+				value: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLW1pbnVzLWljb24gbHVjaWRlLW1pbnVzIj48cGF0aCBkPSJNNSAxMmgxNCIvPjwvc3ZnPg==)
+			-
+				label: None
+				value: url(data:image/svg+xml;base64)
+	-
+		id: hr-gap-hide
+		title: Remove gap in horizontal rule
+		type: class-toggle
+		default: false
+	-
+		id: bullet-default
+		title: Default bullet point
+		type: class-toggle
+		default: false
+
 */
