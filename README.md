@@ -13,7 +13,7 @@ The colours are mostly based off Obsidians default theme, but the dark theme has
 Any non-neutral colour uses your accent, or variants of your accent colour.
 
 ## Animations
-Spellbook uses some subtle animations on the openings of tabs to
+Spellbook uses some animations on the openings of tabs
 
 ## Style Settings
 List of controls available with **Style Settings**  community plugin.
